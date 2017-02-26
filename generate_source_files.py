@@ -11,15 +11,15 @@ class NotHeader(Exception):
 
 
 def generate(source_directory):
-    all_functions = [f for l in get_all_functions(source_directory) for f in l]
+    all_functions = get_all_functions(source_directory)
 
-    for function in all_functions:
-        print(function)
+    for functions in all_functions:
+        for function in functions:
+            yield function
 
 
 def get_all_functions(source_directory):
     for file in get_source_files(source_directory):
-        print("Getting from file %s" % file)
         yield get_functions_from_source(file)
 
 

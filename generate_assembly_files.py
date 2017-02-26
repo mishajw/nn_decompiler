@@ -24,10 +24,7 @@ def generate(object_file):
         function = get_function(process.stdout)
 
         if function:
-            print(function.name)
-
-            for line in function.lines:
-                print(line)
+            yield function
 
 
 def get_function(object_dump):
