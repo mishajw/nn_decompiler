@@ -1,4 +1,4 @@
 *.swp
 output/
 __pycache__/
-
+.idea/
