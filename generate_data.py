@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 
 import argparse
-import generate_assembly_files
-import generate_source_files
+import generate_assembly_functions
+import generate_source_functions
 
 parser = argparse.ArgumentParser(description = "Generate data for translating \
         assembly to source code using the Linux Kernel")
@@ -14,8 +14,8 @@ parser.add_argument("--output_directory", type=str, default="output")
 def main():
     args = parser.parse_args()
 
-    assembly_functions = generate_assembly_files.generate(args.object_file)
-    source_functions = generate_source_files.generate(args.source_directory)
+    assembly_functions = generate_assembly_functions.generate(args.object_file)
+    source_functions = generate_source_functions.generate(args.source_directory)
 
     for function in assembly_functions:
         print(function.name)
