@@ -16,6 +16,10 @@ def generate(object_file):
         ["objdump", "-d", object_file],
         stdout=subprocess.PIPE)
 
+    # Remove header of objdump output
+    for i in range(6):
+        next(process.stdout)
+
     while True:
         function = get_function(process.stdout)
 
