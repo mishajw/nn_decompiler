@@ -42,11 +42,22 @@ def get_function(object_dump):
 
     function_name = function_header_regex.group(1)
 
+    def parse_function_line(line):
+        line_regex = re.search("^\s+[0-9a-f]+:\s+([0-9a-f]{2}\s)*[0-9a-f]{2}\s\s+(.*)", line)
+
+        if line_regex:
+            return line_regex.group(2)
+        else:
+            return
+
     def get_function_lines():
         for line in object_dump:
             if line.rstrip().decode() == "":
                 return
-            else:
-                yield line.rstrip().decode()
+
+            parsed_line = parse_function_line(line.rstrip().decode())
+
+            if parsed_line:
+                yield parsed_line
 
     return AssemblyFunction(function_name, list(get_function_lines()))
