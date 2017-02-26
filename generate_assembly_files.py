@@ -31,7 +31,7 @@ def get_function(object_dump):
     function_header_line = next(object_dump).rstrip().decode()
 
     function_header_regex = \
-        re.search("^[0-9a-z]+ <([0-9A-Za-z_]+)>:", function_header_line)
+        re.search("^[0-9a-z]+ <([0-9A-Za-z_\.]+)>:", function_header_line)
 
     if not function_header_regex:
         sys.stderr.write("Couldn't find function header in %s\n" % function_header_line)
