@@ -6,6 +6,12 @@ import sys
 sys.setrecursionlimit(20000)
 
 
+class SourceFunction:
+    def __init__(self, name, body):
+        self.name = name
+        self.body = body
+
+
 class NotHeader(Exception):
     pass
 
@@ -79,9 +85,7 @@ def get_function(file):
 
     body = get_rest_of_block()
 
-    print("Function with %d header and %d body" % (len(header), len(body)))
-
-    return "%s{%s}" % (header, body)
+    return SourceFunction(header, "%s{%s}" % (header, body))
 
 
 def get_source_files(source_directory):

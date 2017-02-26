@@ -14,8 +14,15 @@ parser.add_argument("--output_directory", type=str, default="output")
 def main():
     args = parser.parse_args()
 
-    generate_assembly_files.generate(args.object_file)
-    generate_source_files.generate(args.source_directory)
+    assembly_functions = generate_assembly_files.generate(args.object_file)
+    source_functions = generate_source_files.generate(args.source_directory)
+
+    for function in assembly_functions:
+        print(function.name)
+
+    for function in source_functions:
+        print(function.name)
+
 
 
 if __name__ == "__main__":
