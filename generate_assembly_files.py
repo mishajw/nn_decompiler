@@ -24,7 +24,10 @@ def generate(object_file):
         function = get_function(process.stdout)
 
         if function:
-            print("%s has %d lines" % (function.name, len(function.lines)))
+            print(function.name)
+
+            for line in function.lines:
+                print(line)
 
 
 def get_function(object_dump):
