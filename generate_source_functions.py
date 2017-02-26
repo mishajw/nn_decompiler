@@ -63,22 +63,23 @@ def get_function(file):
         return character + get_header()
 
     def get_rest_of_block(bracket_depth=0):
-        character = next(file)
+        for character in file:
+            if character == "{":
+                bracket_depth += 1
 
-        if character == "{":
-            bracket_depth += 1
+            if character == "}":
+                if bracket_depth == 0:
+                    return
+                else:
+                    bracket_depth -= 1
 
-        if character == "}":
-            if bracket_depth == 0:
-                return ""
-            else:
-                bracket_depth -= 1
-
-        return character + get_rest_of_block(bracket_depth)
+            yield character
 
     try:
         header = get_header()
     except NotHeader:
+        return
+    except RecursionError:
         return
 
     function_name = get_function_name(header)
@@ -86,7 +87,7 @@ def get_function(file):
     if not function_name:
         return
 
-    body = get_rest_of_block()
+    body = "".join(get_rest_of_block())
 
     return SourceFunction(function_name, "%s{%s}" % (header, body))
 
