@@ -1,9 +1,7 @@
 #!/usr/bin/env python
 
 import os
-
-import sys
-sys.setrecursionlimit(20000)
+import re
 
 
 class SourceFunction:
@@ -94,7 +92,13 @@ def get_function(file):
 
 
 def get_function_name(header):
-    return header
+
+    header_regex = re.search("^\s*.* ([0-9A-Za-z_]+)\(.*\)\s+$", header)
+
+    if not header_regex:
+        return
+
+    return header_regex.group(1)
 
 
 def get_source_files(source_directory):
