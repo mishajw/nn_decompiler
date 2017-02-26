@@ -83,9 +83,18 @@ def get_function(file):
     except NotHeader:
         return
 
+    function_name = get_function_name(header)
+
+    if not function_name:
+        return
+
     body = get_rest_of_block()
 
-    return SourceFunction(header, "%s{%s}" % (header, body))
+    return SourceFunction(function_name, "%s{%s}" % (header, body))
+
+
+def get_function_name(header):
+    return header
 
 
 def get_source_files(source_directory):
