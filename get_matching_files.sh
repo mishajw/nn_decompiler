@@ -2,9 +2,9 @@
 
 # 1) Get all files in output
 find output | \
-# 2) Remove all /output, /cpp, /asm paths
-# 3) Remove all .cpp and .asm extensions
-    sed 's/\///g;s/^output//g;s/^cpp//g;s/^asm//g;s/.cpp$//g;s/.asm$//g;/^$/d' | \
+# 2) Remove all /output, /c, /asm paths
+# 3) Remove all .c and .asm extensions
+    sed 's/\///g;s/^output//g;s/^c//g;s/^asm//g;s/.c$//g;s/.asm$//g;/^$/d' | \
 # 4) Group lines with count
     sort | \
     uniq -c | \

@@ -24,7 +24,7 @@ def main():
     assembly_functions = generate_assembly_functions.generate(args.object_file)
     source_functions = generate_source_functions.generate(args.source_directory)
 
-    for path in [os.path.join(output_directory, subdirectory) for subdirectory in ["asm", "cpp"]]:
+    for path in [os.path.join(output_directory, subdirectory) for subdirectory in ["asm", "c"]]:
         if not os.path.exists(path):
             print("Creating directory %s because it doesn't exist" % path)
             os.makedirs(path)
@@ -42,9 +42,9 @@ def main():
 
     print("Writing out source functions")
     for function in islice(source_functions, max_functions):
-        file_name = strip_for_file_name(function.name) + ".cpp"
+        file_name = strip_for_file_name(function.name) + ".c"
 
-        with open(os.path.join(output_directory, "cpp", file_name), 'w') as f:
+        with open(os.path.join(output_directory, "c", file_name), 'w') as f:
             for line in function.body:
                 f.write(line)
 

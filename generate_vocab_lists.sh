@@ -14,8 +14,8 @@ get_words() {
 echo "Creating asm vocab"
 get_words output/asm > output/asm_vocab.txt
 
-echo "Creating cpp vocab"
-get_words output/cpp > output/cpp_vocab.txt
+echo "Creating c vocab"
+get_words output/c > output/c_vocab.txt
 
 echo "Done"
 
