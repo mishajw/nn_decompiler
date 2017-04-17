@@ -6,7 +6,7 @@ get_words() {
   # `cat` every file
   find $source_directory -type f | xargs cat | \
     # Print all words
-    grep -Eo '\w+|[^A-Za-z0-9_ ]+' | \
+    grep -Po '\w+|[^\w\s]+' | \
     # Get frequencies
     sort | uniq -c | sort -hr
 }
