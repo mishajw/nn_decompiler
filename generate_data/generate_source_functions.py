@@ -79,6 +79,9 @@ def get_function(file):
         header = get_header()
     except NotHeader:
         return
+    except RuntimeError as e:
+        print("Error while reading header: %s" % e)
+        return
 
     function_name = get_function_name(header)
 
