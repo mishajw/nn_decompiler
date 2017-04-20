@@ -9,4 +9,6 @@ find output | \
     sort | \
     uniq -c | \
 # 5) Only print those that don't have a count of one
-    grep -Ev "^ *1"
+    grep -Ev "^ *1" |
+# 6) Remove count
+    sed 's/^\s\+[0-9]\+\s\+//g' 
