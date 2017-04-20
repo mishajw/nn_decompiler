@@ -79,8 +79,6 @@ def get_function(file):
         header = get_header()
     except NotHeader:
         return
-    except RecursionError:
-        return
 
     function_name = get_function_name(header)
 
