@@ -31,7 +31,7 @@ def get_functions_from_source(file_name):
     with open(file_name, 'r', encoding="ISO-8859-1") as file:
         while True:
             try:
-                function = get_function(get_character_generator(file))
+                function = get_function(get_commentless_generator(get_character_generator(file)))
 
                 if function:
                     yield function
@@ -39,19 +39,19 @@ def get_functions_from_source(file_name):
             except StopIteration:
                 return
 
+def clear_to_new_line(file):
+    character = next(file)
+
+    if character != "\n":
+        clear_to_new_line(file)
+
 
 def get_function(file):
-    def clear_to_new_line():
-        character = next(file)
-
-        if character != "\n":
-            clear_to_new_line()
-
     def get_header():
         character = next(file)
 
         if character == "#":
-            clear_to_new_line()
+            clear_to_new_line(file)
             raise NotHeader
 
         if character == ";":
@@ -114,3 +114,38 @@ def get_character_generator(file):
     for line in file:
         for character in line:
             yield character
+
+
+def clear_to_close_block(file, astrix_before = False):
+    current_char = next(file)
+
+    if current_char == "/" and astrix_before:
+        print("end block")
+        return
+    elif current_char == "*":
+        print("single astrix")
+        clear_to_close_block(file, True)
+
+    clear_to_close_block(file)
+
+
+def get_commentless_generator(file, slash_before=False):
+    current_char = next(file)
+    print(current_char)
+
+    if current_char == "/":
+        if slash_before:
+            print("double slash")
+            clear_to_new_line(file)
+            yield from get_commentless_generator(file)
+        else:
+            print("single slash")
+            yield current_char
+            yield from get_commentless_generator(file, True)
+    elif current_char == "*" and slash_before:
+        print("block")
+        clear_to_close_block(file)
+        yield from get_commentless_generator(file)
+    else:
+        yield current_char
+
